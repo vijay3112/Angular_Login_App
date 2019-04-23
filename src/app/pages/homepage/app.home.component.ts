@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginComponentService } from '../../service/login.component.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit {
 	
 	title = 'Login Application';
   
-  constructor(public loginService: LoginComponentService) {
+  constructor(public loginService: LoginComponentService, public _router: Router) {
 	  
   }
 
@@ -42,11 +43,9 @@ export class HomeComponent implements OnInit {
 	  return this.loginService.loginCustomer(loginUser.userName, loginUser.password ).subscribe(res => {
           if (res.status === 200) {
         	  if (res.text() == 'true') {
-        		  this.message = "Hey " + this.userName + " Welcome to Login Page.";
-        		  //this.navigate.route("/success_page");
+        		  this._router.navigateByUrl("/successPage");
         	  } else {
-        		  this.message = "Please validate given credentials";
-        		  //this.nvaigate.route("/failure_page");
+        		  	this._router.navigateByUrl("/failurePage");
         	  }
           } else {
         	  alert("failure");
